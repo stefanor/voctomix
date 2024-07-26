@@ -144,7 +144,7 @@ class AVSource(object, metaclass=ABCMeta):
                     ! compositor-{name}.
 
                     {videoport}
-                    ! {vcaps}
+                    ! {vcaps},name=vcapsfilter-{name}
                     ! queue
                         max-size-time=3000000000
                     ! compositor-{name}.
@@ -158,7 +158,7 @@ class AVSource(object, metaclass=ABCMeta):
             else:
                 video = """
                     {videoport}
-                    ! {vcaps}
+                    ! {vcaps},name=vcapsfilter-{name}
                     ! queue
                         max-size-time=3000000000
                     ! tee

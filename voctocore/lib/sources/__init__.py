@@ -10,6 +10,7 @@ def spawn_source(name, port, has_audio=True, has_video=True):
     from lib.config import Config
     from lib.sources.decklinkavsource import DeckLinkAVSource
     from lib.sources.imgvsource import ImgVSource
+    from lib.sources.srtavsource import SRTAVSource
     from lib.sources.tcpavsource import TCPAVSource
     from lib.sources.testsource import TestSource
     from lib.sources.filesource import FileSource
@@ -26,6 +27,8 @@ def spawn_source(name, port, has_audio=True, has_video=True):
         sources[name] = DeckLinkAVSource(name, has_audio, has_video)
     elif kind == 'file':
         sources[name] = FileSource(name, has_audio, has_video)
+    elif kind == 'srt':
+        sources[name] = SRTAVSource(name)
     elif kind == 'tcp':
         sources[name] = TCPAVSource(name, port, has_audio, has_video)
     elif kind == 'v4l2':

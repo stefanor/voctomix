@@ -15,10 +15,13 @@ encoders = {'fdkaacenc',
             'avdec_mp3',
             'flacenc',
             'wavenc',
-            'opus',
+            'opusenc',
             'avenc_mp3',
             'lame'
             'avenc_s302m'}
+
+decoders = {'avdec_aac', 'avdec_aac_latm', 'avdec_aac_fixed', 'flacdec',
+            'opusdec', 'mpg123', 'avdec_mp3', 'avdec_s302m'}
 
 
 def create_mixmatrix(in_channels: int, out_channels: int, channel_mapping: str):
@@ -75,7 +78,21 @@ def construct_audio_encoder_pipeline(section):
         log.error("Unknown audio encoder {}".format(encoder))
         sys.exit(-1)
 
-    if encoder_options:
+    if encoder_options:  # lol
         pipeline += """{options}""".format(options=encoder_options)
 
     return pipeline
+
+
+def construct_audio_decoder_pipeline(section):
+    decoder = Config.getAudioCodec(section)
+    decoder_options = ''
+    # check if we have an option string as part of the codec config
+    if ',' in decoder:
+        decoder, decoder_options = decoder.split(',', 1)
+
+    if decoder in decoders:
+        return f"{decoder} {decoder_options}"
+    else:
+        log.error("Unknown audio decoder {}".format(decoder))
+        sys.exit(-1)

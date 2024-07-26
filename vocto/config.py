@@ -2,7 +2,7 @@
 import logging
 import os
 import re
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 from gi.repository import Gst
 from lib.args import Args
@@ -58,7 +58,7 @@ GST_TYPE_AUDIO_TEST_SRC_WAVE = [
 ]
 
 
-class VocConfigParser(SafeConfigParser):
+class VocConfigParser(ConfigParser):
     log = logging.getLogger('VocConfigParser')
     audio_streams = None
 
@@ -351,6 +351,9 @@ class VocConfigParser(SafeConfigParser):
 
     def get_sink_audio_map(self, section):
         return self.get(section, 'audio_map')
+
+    def getAudioCodec(self, section):
+        return self.get(section, 'audiocodec')
 
     def getVideoCodec(self, section):
         if self.has_option(section, 'videocodec'):
